@@ -1,8 +1,8 @@
-export class AuthorizeResponse {
+import { ApiResponse } from "./apiResponse";
+
+export class AuthorizeResponse extends ApiResponse {
     data: {
         userGroup: number;
         token: string | undefined;
     } | undefined;
-    status: number | undefined;
-    error: string | undefined;
 }
