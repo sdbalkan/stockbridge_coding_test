@@ -4,6 +4,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { User } from '../_models/user';
 import { map } from 'rxjs/operators';
 import { AuthorizeResponse } from '../_models/authorize-response';
+import { Router } from '@angular/router';
 
 const AUTH_API = 'http://66.70.229.82:8181/Authorize';
 
@@ -15,11 +16,11 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class AuthService {
-  private userSubject: BehaviorSubject<User| null>;
+  private userSubject: BehaviorSubject<User | null>;
   public user: Observable<User | null>;
 
-  constructor(private http: HttpClient) {
-    let strUser = localStorage.getItem('user')    
+  constructor(private http: HttpClient, private router: Router) {
+    let strUser = localStorage.getItem('user')
     let user;
     if (strUser) {
       user = JSON.parse(strUser);
@@ -37,7 +38,7 @@ export class AuthService {
         let user = new User();
         user.token = result?.data?.token;
         user.username = email;
-        
+
         console.log(user);
 
         localStorage.setItem('user', JSON.stringify(user));
@@ -50,5 +51,6 @@ export class AuthService {
   logout() {
     localStorage.removeItem('user');
     this.userSubject.next(null);
+    this.router.navigate(['/login']);
   }
 }
