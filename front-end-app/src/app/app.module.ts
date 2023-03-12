@@ -8,6 +8,8 @@ import { AppComponent } from './app.component';
 import { WelcomeComponent } from './components/welcome/welcome.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './_helpers/auth.interceptor';
+import { WebsocketService } from './_services/websocket.service';
+import { LogoutService } from './_services/logout.service';
 
 @NgModule({
   declarations: [
@@ -23,6 +25,8 @@ import { AuthInterceptor } from './_helpers/auth.interceptor';
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    WebsocketService,
+    LogoutService
   ],
   bootstrap: [AppComponent]
 })

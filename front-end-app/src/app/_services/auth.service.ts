@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { User } from '../_models/user';
 import { map } from 'rxjs/operators';
-import { AuthorizeResponse } from '../_models/authorizeResponse';
+import { AuthorizeResponse } from '../_models/authorize-response';
 
 const AUTH_API = 'http://66.70.229.82:8181/Authorize';
 

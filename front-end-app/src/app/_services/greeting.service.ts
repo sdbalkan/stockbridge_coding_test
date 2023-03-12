@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { first, map } from 'rxjs/operators';
-import { GreetingResponse } from '../_models/greetingResponse';
+import { GreetingResponse } from '../_models/greeting-response';
 
 const GREETING_API = 'http://66.70.229.82:8181/GetGreeting';
 

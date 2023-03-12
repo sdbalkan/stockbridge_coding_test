@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { first } from 'rxjs/operators';
 import { AuthService } from 'src/app/_services/auth.service';
+import { LogoutService } from 'src/app/_services/logout.service';
 
 @Component({
   selector: 'app-login',
@@ -30,6 +31,7 @@ export class LoginComponent implements OnInit {
     this.authService.login(username, password).pipe(first())
       .subscribe(
         data => {
+          console.log("Login successful");
           this.isLoggedIn = true;
           this.router.navigate(['/welcome']);
         },
