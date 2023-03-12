@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { User } from '../_models/user';
-import { map } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 import { AuthorizeResponse } from '../_models/authorize-response';
 import { Router } from '@angular/router';
 
@@ -32,20 +32,28 @@ export class AuthService {
 
   login(email: string, password: string) {
     return this.http.post<AuthorizeResponse>(AUTH_API, { email, password }, httpOptions)
-      .pipe(map(result => {
-        console.log(result);
+      .pipe(
+        map(result => {
+          console.log(result);
 
-        let user = new User();
-        user.token = result?.data?.token;
-        user.username = email;
+          if (result?.error) {
+            throw new Error(result.error);
+          }
 
-        console.log(user);
+          let user = new User();
+          user.token = result?.data?.token;
+          user.username = email;
 
-        localStorage.setItem('user', JSON.stringify(user));
-        this.userSubject.next(user);
+          console.log(user);
 
-        return user;
-      }));;
+          localStorage.setItem('user', JSON.stringify(user));
+          this.userSubject.next(user);
+
+          return user;
+        }),
+        catchError(err => {
+          throw err;
+        }));
   }
 
   logout() {
